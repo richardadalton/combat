@@ -3,17 +3,7 @@ import math
 import pygame, pgzrun
 from pgzero.builtins import Actor, music, sounds
 from pgzero.keyboard import keyboard
-
-
-# Set up constants
-WIDTH = 800
-HEIGHT = 480
-TITLE = "Combat!"
-
-HALF_WIDTH = WIDTH // 2
-HALF_HEIGHT = HEIGHT // 2
-
-PLAYER_SPEED = 1
+from constants import *
 
 
 class Tank(Actor):

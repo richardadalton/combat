@@ -1,5 +1,5 @@
 import pgzrun, pgzero
-
+from constants import *
 from game import Game
 from controls import p1_controls, p2_controls
 screen: pgzero.screen.Screen

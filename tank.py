@@ -1,14 +1,16 @@
 import math
 from constants import *
+from bullet import Bullet
 import pygame
 from pgzero.builtins import Actor
 
 class Tank(Actor):
-    def __init__(self, player, position, heading, move_func=None):
+    def __init__(self, game, player, position, heading, move_func=None):
 
         x, y = position
         super().__init__("blank", (x, y))
 
+        self.game = game
         self.player = player
         self.score = 0
         self.heading = heading
@@ -37,7 +39,7 @@ class Tank(Actor):
         self.timer -= 1
 
         # Our movement function tells us how much to move on the Y axis
-        rotate, movement = self.move_func()
+        rotate, movement, fire = self.move_func()
         self.heading += rotate
         self.heading = self.heading % 360
 
@@ -60,5 +62,11 @@ class Tank(Actor):
         if self.y != TOP_EDGE and self.y != BOTTOM_EDGE:
             self.x = new_x
 
+        BULLET_LIMIT = 1
+        if fire:
+            my_bullets = [b for b in self.game.bullets if b.player == self.player]
+            if len(my_bullets) < BULLET_LIMIT:
+                self.game.bullets.append(Bullet(self.player,(self.x, self.y), self.heading))
+
     def ai(self):
-        return (0, 0)
+        return (0, 0, False)

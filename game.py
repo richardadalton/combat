@@ -10,7 +10,7 @@ class Game:
         # control inputs (or the value None if this is intended to be an AI player)
         self.tanks = [
             Tank(player=0, game=self, position=(TANK_START_FROM_EDGE, HALF_HEIGHT), heading=90, move_func=controls[0]),
-            Tank(player=1, game=self, position=(WIDTH - TANK_START_FROM_EDGE, HALF_HEIGHT), heading=270, move_func=controls[1]),
+            Tank(player=1, game=self, position=(WIDTH - TANK_START_FROM_EDGE, HALF_HEIGHT - 100), heading=270, move_func=controls[1]),
         ]
 
         self.bullets = []

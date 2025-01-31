@@ -14,6 +14,7 @@ class Tank(Actor):
         self.player = player
         self.score = 0
         self.heading = heading
+        self.reload_time = 0
 
         if move_func != None:
             self.move_func = move_func
@@ -37,6 +38,8 @@ class Tank(Actor):
 
     def update(self):
         self.timer -= 1
+        if self.reload_time > 0:
+            self.reload_time -= 1
 
         # Our movement function tells us how much to move on the Y axis
         rotate, movement, fire = self.move_func()
@@ -62,11 +65,13 @@ class Tank(Actor):
         if self.y != TOP_EDGE and self.y != BOTTOM_EDGE:
             self.x = new_x
 
-        BULLET_LIMIT = 1
+        BULLET_LIMIT = 10
         if fire:
-            my_bullets = [b for b in self.game.bullets if b.player == self.player]
-            if len(my_bullets) < BULLET_LIMIT:
-                self.game.bullets.append(Bullet(self.player,(self.x, self.y), self.heading))
+            if self.reload_time == 0:
+                my_bullets = [b for b in self.game.bullets if b.player == self.player]
+                if len(my_bullets) < BULLET_LIMIT:
+                    self.game.bullets.append(Bullet(self.game, self.player,(self.x, self.y), self.heading))
+                    self.reload_time = 10
 
     def ai(self):
         return (0, 0, False)

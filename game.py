@@ -10,7 +10,7 @@ class Game:
         # control inputs (or the value None if this is intended to be an AI player)
         self.tanks = [
             Tank(player=0, game=self, position=(TANK_START_FROM_EDGE, HALF_HEIGHT), heading=90, move_func=controls[0]),
-            Tank(player=1, game=self, position=(WIDTH - TANK_START_FROM_EDGE, HALF_HEIGHT - 100), heading=270, move_func=controls[1]),
+            Tank(player=1, game=self, position=(WIDTH - TANK_START_FROM_EDGE, HALF_HEIGHT), heading=270, move_func=controls[1]),
         ]
 
         self.bullets = []
@@ -29,13 +29,24 @@ class Game:
         # Draw background
         screen.blit("table", (0,0))
 
+        # Draw 'just scored' effects, if required
+        for p in (0,1):
+            if self.tanks[p].spinning > 0:
+                other_tank = (p + 1) % 2
+                screen.blit("effect" + str(other_tank), (0,0))
+
+
         # Display scores - outer loop goes through each player
         for p in (0,1):
             # Convert score into a string of 2 digits (e.g. "05") so we can later get the individual digits
             score = f"{self.tanks[p].score:02d}"
             # Inner loop goes through each digit
             for i in (0,1):
-                image = "digit0" + str(score[i])
+                colour = "0"
+                other_p = 1 - p
+                if self.tanks[other_p].spinning > 0:
+                    colour = "1" if p == 0  else "2"
+                image = "digit" + colour + str(score[i])
                 screen.blit(image, (255 + (160 * p) + (i * 55), 46))
 
         # Display the tanks

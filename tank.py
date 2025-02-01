@@ -1,5 +1,6 @@
 import math
 from random import randint
+from pgzero.builtins import sounds
 
 from constants import *
 from bullet import Bullet
@@ -84,6 +85,7 @@ class Tank(Actor):
         self.x += bullet.dx * 50
         self.y += bullet.dy * 50
         self.spinning = 10
+        sounds.player_explode0.play()
 
     def ai(self):
         return (0, 0, False)

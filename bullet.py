@@ -5,10 +5,11 @@ import math
 SPEED = 6
 
 class Bullet(Actor):
-    def __init__(self, game, player, pos, heading):
+    def __init__(self, game, player, tank, pos, heading):
         self.game = game
         self.player = player
         self.heading = heading
+        self.tank = tank
 
         super().__init__(f"bullet{self.player}0", pos)
 
@@ -43,6 +44,12 @@ class Bullet(Actor):
                 sounds.bounce_synth0.play()
                 self.bounce_count = (self.bounce_count + 1) % 5
 
+
+        for obj in self.game.tanks:
+            if obj and obj.player != self.player and obj.collidepoint(self.pos):
+                self.done = True
+                self.tank.score += 1
+                obj.kill(self)
 
         self.timer -= 1
         if self.timer == 0:

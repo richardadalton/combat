@@ -1,4 +1,6 @@
 import math
+from random import randint
+
 from constants import *
 from bullet import Bullet
 import pygame
@@ -70,8 +72,13 @@ class Tank(Actor):
             if self.reload_time == 0:
                 my_bullets = [b for b in self.game.bullets if b.player == self.player]
                 if len(my_bullets) < BULLET_LIMIT:
-                    self.game.bullets.append(Bullet(self.game, self.player,(self.x, self.y), self.heading))
+                    self.game.bullets.append(Bullet(self.game, self.player, self, (self.x, self.y), self.heading))
                     self.reload_time = 10
+
+    def kill(self, bullet):
+        self.x += bullet.dx * 50
+        self.y += bullet.dy * 50
+        self.heading = randint(0, 360)
 
     def ai(self):
         return (0, 0, False)

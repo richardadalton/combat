@@ -22,8 +22,8 @@ class Game:
             if obj:
                 obj.update()
 
-        # Recreate the bullets list, which will contain all existing bullets except those which have gone off the screen or have hit something
-        self.bullets = [b for b in self.bullets if b.y > 0 and not b.done]
+        # Recreate the bullets list, which will contain all existing bullets except those which have finished hit something
+        self.bullets = [b for b in self.bullets if not b.done]
 
     def draw(self, screen):
         # Draw background
@@ -34,7 +34,6 @@ class Game:
             if self.tanks[p].spinning > 0:
                 other_tank = (p + 1) % 2
                 screen.blit("effect" + str(other_tank), (0,0))
-
 
         # Display scores - outer loop goes through each player
         for p in (0,1):
@@ -53,5 +52,6 @@ class Game:
         for obj in self.tanks:
             obj.draw(screen)
 
+        # Display the bullets
         for obj in self.bullets:
             obj.draw()

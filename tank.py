@@ -54,7 +54,7 @@ class Tank(Actor):
         dx = math.cos(rad) * movement
         dy = math.sin(rad) * movement
 
-        # Apply movement to position, ensuring bat does not go through the side walls
+        # Apply movement to position, ensuring tank does not go through the walls
         TOP_EDGE = TOP_BORDER
         BOTTOM_EDGE = HEIGHT - BOTTOM_BORDER
         LEFT_EDGE = LEFT_BORDER
@@ -72,9 +72,9 @@ class Tank(Actor):
         BULLET_LIMIT = 1
         if fire:
             if self.reload_time == 0:
-                my_bullets = [b for b in self.game.bullets if b.player == self.player]
+                my_bullets = [b for b in self.game.bullets if b.tank.player == self.player]
                 if len(my_bullets) < BULLET_LIMIT:
-                    self.game.bullets.append(Bullet(self.game, self.player, self, (self.x, self.y), self.heading))
+                    self.game.bullets.append(Bullet(self))
                     self.reload_time = 10
 
         if self.spinning > 0:

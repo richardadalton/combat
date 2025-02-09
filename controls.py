@@ -1,6 +1,6 @@
 from pgzero.keyboard import keyboard
+from constants import TANK_SPEED
 
-PLAYER_SPEED = 3
 
 def p1_controls():
     rotate = 0
@@ -8,9 +8,9 @@ def p1_controls():
     fire = False
 
     if keyboard.w:
-        move = PLAYER_SPEED
+        move = TANK_SPEED
     elif keyboard.s:
-        move = -PLAYER_SPEED
+        move = -TANK_SPEED
 
     if keyboard.a:
         rotate = -2
@@ -28,9 +28,9 @@ def p2_controls():
     fire = False
 
     if keyboard.up:
-        move = PLAYER_SPEED
+        move = TANK_SPEED
     elif keyboard.down:
-        move = -PLAYER_SPEED
+        move = -TANK_SPEED
 
     if keyboard.left:
         rotate = -2

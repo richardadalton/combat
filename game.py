@@ -1,5 +1,7 @@
 from constants import *
 from tank import Tank
+from wall import Wall
+from levels import levels
 
 class Game:
     def __init__(self, controls=(None, None)):
@@ -14,6 +16,11 @@ class Game:
         ]
 
         self.bullets = []
+
+        self.walls = []
+        for wall in levels[1]:
+            x, y, image = wall
+            self.walls.append(Wall((x, y), image))
 
     def update(self):
         # Update all active objects
@@ -55,3 +62,8 @@ class Game:
         # Display the bullets
         for obj in self.bullets:
             obj.draw()
+
+        # Display the walls
+        for obj in self.walls:
+            obj.draw()
+
